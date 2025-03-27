@@ -1,0 +1,33 @@
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fashion-mnist-classifier
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fashion-mnist-classifier
+  template:
+    metadata:
+      labels:
+        app: fashion-mnist-classifier
+    spec:
+      containers:
+      - name: fashion-mnist-classifier
+        image: fashion-mnist-classifier:latest
+        ports:
+        - containerPort: 5000
+        resources:
+          limits:
+            cpu: "1"
+            memory: "1Gi"
+          requests:
+            cpu: "0.5"
+            memory: "512Mi"
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 5

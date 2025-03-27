@@ -1,0 +1,12 @@
+# service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: fashion-mnist-classifier
+spec:
+  selector:
+    app: fashion-mnist-classifier
+  ports:
+  - port: 80
+    targetPort: 5000
+  type: LoadBalancer
